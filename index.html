@@ -1,15 +1,96 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>ChatGPT Voice Input Prototype</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Voice Onboarding - ChatGPT</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .chat-bar {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .chat-bar input[type="text"] {
+      width: 70%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .chat-bar button {
+      padding: 10px 16px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .chat-bar button:hover {
+      background-color: #45a049;
+    }
+
+    #chat-response {
+      margin-top: 20px;
+      font-style: italic;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
-  <h1>🎤 Ask ChatGPT Using Voice</h1>
-  <p>Stuck on a concept? Just tap and ask.</p>
-  <button class="mic-btn" onclick="startOnboarding()">Start Voice</button>
-  <div class="tooltip">Perfect for quick doubts during commute!</div>
-  <script src="script.js"></script>
+  <div class="screen">
+    <h1>Welcome to ChatGPT Voice</h1>
+    <p>Use voice or typing to ask academic questions faster and hands-free.</p>
+    
+    <a href="onboarding1.html" class="btn">Start Onboarding</a>
+
+    <!-- Voice button -->
+    <button onclick="startRecognition()" class="btn">🎤 Use Voice</button>
+
+    <!-- Chat input bar -->
+    <div class="chat-bar">
+      <input type="text" id="chat-input" placeholder="Or type your question here..." />
+      <button onclick="handleChatSubmit()">Send</button>
+    </div>
+
+    <div id="chat-response"></div>
+  </div>
+
+  <script>
+    function handleChatSubmit() {
+      const input = document.getElementById('chat-input');
+      const responseDiv = document.getElementById('chat-response');
+      const userText = input.value.trim();
+
+      if (userText === "") {
+        responseDiv.textContent = "Please type something!";
+        return;
+      }
+
+      // Simulated response
+      responseDiv.textContent = `You asked: "${userText}" — Smart query!`;
+      input.value = "";
+    }
+
+    function startRecognition() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-IN';
+      recognition.onresult = function(event) {
+        const resultText = event.results[0][0].transcript;
+        document.getElementById('chat-response').textContent = `🎤 You said: "${resultText}"`;
+      };
+      recognition.onerror = function(event) {
+        document.getElementById('chat-response').textContent = "Voice input failed. Try again.";
+      };
+      recognition.start();
+    }
+  </script>
 </body>
 </html>
