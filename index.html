@@ -37,10 +37,15 @@
       background-color: #45a049;
     }
 
-    #chat-response {
+    #chat-response, #nudge {
       margin-top: 20px;
       font-style: italic;
       color: #333;
+    }
+
+    #nudge {
+      color: #ff5722;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -56,10 +61,11 @@
 
     <!-- Chat input bar -->
     <div class="chat-bar">
-      <input type="text" id="chat-input" placeholder="Or type your question here..." />
+      <input type="text" id="chat-input" placeholder="Or type your question here..." oninput="checkLength()" />
       <button onclick="handleChatSubmit()">Send</button>
     </div>
 
+    <div id="nudge"></div>
     <div id="chat-response"></div>
   </div>
 
@@ -67,6 +73,7 @@
     function handleChatSubmit() {
       const input = document.getElementById('chat-input');
       const responseDiv = document.getElementById('chat-response');
+      const nudge = document.getElementById('nudge');
       const userText = input.value.trim();
 
       if (userText === "") {
@@ -77,6 +84,7 @@
       // Simulated response
       responseDiv.textContent = `You asked: "${userText}" — Smart query!`;
       input.value = "";
+      nudge.textContent = "";
     }
 
     function startRecognition() {
@@ -90,6 +98,16 @@
         document.getElementById('chat-response').textContent = "Voice input failed. Try again.";
       };
       recognition.start();
+    }
+
+    function checkLength() {
+      const input = document.getElementById('chat-input').value;
+      const nudge = document.getElementById('nudge');
+      if (input.length > 20) {
+        nudge.textContent = "🗣 Try using voice instead of typing!";
+      } else {
+        nudge.textContent = "";
+      }
     }
   </script>
 </body>
