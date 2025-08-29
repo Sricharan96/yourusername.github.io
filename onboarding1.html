@@ -11,6 +11,7 @@
       justify-content: center;
       align-items: center;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .chat-bar input[type="text"] {
@@ -35,10 +36,15 @@
       background-color: #45a049;
     }
 
-    #chat-response {
+    #chat-response, #nudge {
       margin-top: 20px;
       font-style: italic;
       color: #333;
+    }
+
+    #nudge {
+      color: #ff5722;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -50,10 +56,11 @@
 
     <!-- Chat input bar -->
     <div class="chat-bar">
-      <input type="text" id="chat-input" placeholder="Or type your question here..." />
+      <input type="text" id="chat-input" placeholder="Or type your question here..." oninput="checkLength()" />
       <button onclick="handleChatSubmit()">Send</button>
     </div>
 
+    <div id="nudge"></div>
     <div id="chat-response"></div>
   </div>
 
@@ -68,9 +75,20 @@
         return;
       }
 
-      // Simulated response (you can plug in ChatGPT API here)
+      // Simulated response
       responseDiv.textContent = `You asked: "${userText}" — Great question!`;
       input.value = "";
+      document.getElementById('nudge').textContent = "";
+    }
+
+    function checkLength() {
+      const input = document.getElementById('chat-input').value;
+      const nudge = document.getElementById('nudge');
+      if (input.length > 20) {
+        nudge.textContent = "🗣 Try using voice instead of typing!";
+      } else {
+        nudge.textContent = "";
+      }
     }
   </script>
 </body>
