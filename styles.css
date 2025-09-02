@@ -8,7 +8,7 @@ body {
 h1, h2 {
   color: #0d1117;
 }
-.mic-btn, button {
+/* .mic-btn, button {
   background-color: #10a37f;
   color: white;
   padding: 0.8rem 1.6rem;
@@ -20,6 +20,24 @@ h1, h2 {
 }
 .mic-btn:hover, button:hover {
   background-color: #0d8469;
+} */
+
+.mic-btn, button {
+  background-color: #10a37f;
+  color: white;
+  padding: 0.8rem 1.6rem;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.mic-btn:hover, button:hover {
+  background-color: #0d8469;
+  transform: scale(1.03);
 }
 .tooltip {
   margin-top: 1rem;
@@ -52,5 +70,6 @@ h1, h2 {
 .back-button:hover {
   background-color: #e0e0e0;
 }
+
 
 
